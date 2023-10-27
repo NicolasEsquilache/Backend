@@ -1,12 +1,11 @@
-
-const express = require('express');
-
-const ProductManager = require('./Manager.js');
+import express from 'express';
+import {ProductManager} from './Manager.js';
 
 const manager = new ProductManager();
 
 
 const app = express();
+app.use(express.urlencoded({extended:true}));
 const port = 8080; 
 
 
@@ -28,8 +27,7 @@ app.get('/products', async (req, res) => {
 });
 
 app.get('/products/:pid', async (req, res) => {
-  let productId = req.params.pid;
-  productId = parseInt(productId.trim(), 10);
+  let productId = parseInt(req.params.pid,10);
 
   try {
     const product = await manager.getProductById(productId);
@@ -37,7 +35,6 @@ app.get('/products/:pid', async (req, res) => {
     if (product) {
       res.json(product);
     } else {
-      console.log(`Producto con id ${productId} no encontrado`);
       res.status(404).json({ error: 'Producto no existe' });
     }
   } catch (error) {
@@ -50,7 +47,3 @@ app.get('/products/:pid', async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor Express escuchando en el puerto ${port}`);
 });
-
-
-  
-  
