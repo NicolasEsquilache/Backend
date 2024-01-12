@@ -4,7 +4,7 @@ export default class ProductManager {
     constructor() {
         this.productos = [];
         this.nextId = 1;
-        this.path = "products.json";
+        this.path = "src/products.json";
     }
 
     async addProduct(producto) {
