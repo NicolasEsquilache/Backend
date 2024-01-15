@@ -6,7 +6,7 @@ const port = 8080;
 
 app.use(json());
 
-const productManager = new ProductManager();
+const productManager = new ProductManager("src/products.json");
 
 app.get("/products", async (req, res) => {
     try {

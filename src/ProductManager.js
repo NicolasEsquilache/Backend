@@ -1,10 +1,11 @@
 import { promises as fs } from 'fs';
+import path from 'path';
 
 export default class ProductManager {
-    constructor() {
+    constructor(path) {
         this.productos = [];
         this.nextId = 1;
-        this.path = "src/products.json";
+        this.path = path;
     }
 
     async addProduct(producto) {
