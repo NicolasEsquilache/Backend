@@ -1,7 +1,9 @@
 import express from "express";
-const router = express.Router();
+import { upload } from '../utils.js';
 import ProductManager from "../ProductManager.js";
+const router = express.Router();
 const productManager = new ProductManager("src/products.json");
+
 
 // Endpoints
 router.get('/', async (req, res) => {
@@ -34,9 +36,12 @@ router.get('/:idProduct', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', upload.single('thumbnails') , async (req, res) => {
     try {
         const newProduct = { ...req.body };
+        if (req.file) {
+            newProduct.thumbnails = req.file.filename;
+        }
 
         const addedProduct = await productManager.addProduct(newProduct);
         if (addedProduct) {
@@ -89,5 +94,6 @@ router.delete('/:pid', async (req, res) => {
         res.status(500).json({ error: 'Error al eliminar el producto', errorCode: 'INTERNAL_SERVER_ERROR' });
     }
 });
+
 
 export default router;
