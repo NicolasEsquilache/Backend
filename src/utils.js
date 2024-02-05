@@ -10,7 +10,6 @@ const __dirname = dirname(__filename);
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         const dest = join(__dirname, 'descargas');
-        console.log('Destino:', dest);
         cb(null, dest);
     },
     filename: (req, file, cb) => {
